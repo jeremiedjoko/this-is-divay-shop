@@ -237,6 +237,7 @@ export const articles = sqliteTable('articles', {
   excerpt: text('excerpt'),
   content: text('content').notNull(),
   coverUrl: text('cover_url'),
+  authorName: text('author_name'),
   published: integer('published').default(0).notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' })
     .default(sql`(unixepoch())`)
