@@ -229,3 +229,28 @@ export const appointments = sqliteTable('appointments', {
   createdAt: integer('created_at', { mode: 'timestamp' }).default(sql`(unixepoch())`).notNull(),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).default(sql`(unixepoch())`).notNull(),
 });
+// ─── JOURNAL ────────────────────────────────────────────────────────────────
+export const articles = sqliteTable('articles', {
+  id: text('id').primaryKey(),
+  slug: text('slug').unique().notNull(),
+  title: text('title').notNull(),
+  excerpt: text('excerpt'),
+  content: text('content').notNull(),
+  coverUrl: text('cover_url'),
+  published: integer('published').default(0).notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+  updatedAt: integer('updated_at', { mode: 'timestamp' })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+});
+
+// ─── NEWSLETTER ────────────────────────────────────────────────────────────
+export const newsletter = sqliteTable('newsletter', {
+  id: text('id').primaryKey(),
+  email: text('email').unique().notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' })
+    .default(sql`(unixepoch())`)
+    .notNull(),
+});
