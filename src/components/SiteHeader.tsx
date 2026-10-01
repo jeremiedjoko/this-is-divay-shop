@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCart } from "@/store/cart";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Calendar, ChevronDown, LogOut, Menu, ShoppingBag, User, X, LayoutDashboard, ClipboardList } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -96,6 +97,7 @@ export function SiteHeader() {
   }
 
   return (
+    <>
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm border-b border-[#f0dde6]">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
@@ -219,9 +221,10 @@ export function SiteHeader() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* TIROIR MOBILE */}
-      {drawerOpen && (
+      {drawerOpen &&
+        createPortal(
         <div className="fixed inset-0 z-[60] md:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="absolute inset-0 bg-black/40" onClick={() => setDrawerOpen(false)} />
           <div className="absolute right-0 top-0 flex h-full w-[85%] max-w-sm flex-col bg-white shadow-2xl">
@@ -253,14 +256,10 @@ export function SiteHeader() {
                 <Link href="/connexion" className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-sm font-semibold text-stone-700"><User className="h-4 w-4 text-[#c0476b]" /> Connexion / Inscription</Link>
               )}
             </nav>
-            <div className="border-t border-[#f0dde6] p-4" style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}>
-              <Link href="/reservation" className="flex items-center justify-center gap-2 rounded-full bg-[#c0476b] px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-white">
-                <Calendar className="h-4 w-4" /> Prendre rendez-vous
-              </Link>
-            </div>
           </div>
-        </div>
-      )}
-    </header>
+        </div>,
+          document.body,
+        )}
+    </>
   );
 }
